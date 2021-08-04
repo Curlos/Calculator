@@ -16,7 +16,7 @@ html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 400px;
     box-shadow: 5px 10px  10px #888888;
 }
 
@@ -35,7 +35,7 @@ html {
 }
 
 button {
-    height: 100px;
+    height: 70px;
     border: none;
     background-color: #505050;
     border-radius: 50%;
@@ -45,6 +45,10 @@ button {
 
 button:hover {
     background-color: #757575;
+}
+
+button:active {
+    transform: translate(0px, 5px);
 }
 
 .operator, .equal-sign {
@@ -78,3 +82,27 @@ button:hover {
     grid-column: span 2;
 }
 
+.add {
+    grid-column-start: 4;
+    grid-row-start: 4;
+}
+
+.subtract {
+    grid-column-start: 4;
+    grid-row-start: 3;
+}
+
+.multiply {
+    grid-column-start: 4;
+    grid-row-start: 2;
+}
+
+.divide {
+    grid-column-start: 4;
+    grid-row-start: 1;
+}
+
+.clear {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
