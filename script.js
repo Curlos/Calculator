@@ -6,6 +6,7 @@ const buttons = document.getElementsByTagName('button')
 let resultElem = document.querySelector('.calculator-screen')
 let currentValue = Number(resultElem.value)
 let oldValue = null
+let currentOperator = ''
 
 const add = (num1, num2) => {
     return num1 + num2
@@ -23,8 +24,13 @@ const divide = (num1, num2) => {
     return num1 / num2
 }
 
+const calculate = () => {
+
+}
+
 const clear = () => {
     resultElem.value = '0'
+    currentValue = 0
     oldValue = null
 }
 
@@ -39,21 +45,24 @@ const onePercentOfNum = (num) => {
 }
 
 const operators = {
-    "add": add,
-    "subtract": subtract,
-    "multiply": multiply,
-    "divide": divide,
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide,
+    "equal": calculate,
     "clear": clear,
     "+/-": plusMinus,
     "%": onePercentOfNum,
 }
 
 const operate = (operator, num1, num2) => {
+    console.log(operator)
     return operators[operator](num1, num2)
 }
 
 const handleButtonClick = (event) => {
     const value = event.target.value
+    console.log(value)
     if (!isNaN(value)) {
         currentValue = String(currentValue) + String(value)
         resultElem.value = currentValue
@@ -61,13 +70,26 @@ const handleButtonClick = (event) => {
         console.log(currentValue)
     } else if (value == "clear") {
         operators["clear"]()
-    } else {
+    } else if (value == '+/-' || value == '%') {
         operators[value](currentValue)
+    } else {
+        // If button clicked was an operator
+        currentOperator = value
+        console.log(`Current value: ${currentValue}, Old Value: ${oldValue}`)
+        if (currentValue != null && oldValue != null) {
+            let operator = value
+
+            currentValue = operate(operator, oldValue, currentValue)
+            resultElem.value = String(currentValue)
+        } else if (currentValue && oldValue == null) {
+            oldValue = currentValue
+            currentValue = null
+        }
+        
+        console.log(`Current value: ${currentValue}, Old Value: ${oldValue}`)
     }
 }
 
 for (let button of buttons) {
     button.addEventListener('click', handleButtonClick)
 }
-console.log(operate("multiply", 50, 50))
-console.log(currentValue)
